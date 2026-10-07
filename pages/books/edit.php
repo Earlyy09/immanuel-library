@@ -7,85 +7,206 @@
   <link rel="stylesheet" href="../../styles/books/edit.css">
 </head>
 <body>
-  <?php
-  $categories = ["Fiksi", "Sains", "Sejarah", "Teknologi"];
-  $authors = ["Andrea Hirata", "Tere Liye", "J.K. Rowling", "Pramoedya Ananta Toer", "Sapardi Djoko Damono"];
 
-  $book = [
-      "id" => 5, "title" => "Antologi Rasa Nusantara", "isbn" => "978-602-1234-56-7",
-      "year" => 2021, "stock" => 4, "category_id" => 1,
-      "description" => "Kumpulan puisi dan cerita pendek dari berbagai penulis Nusantara.",
-      "author_ids" => [4, 5],
-  ];
-  ?>
-  <div class="app-shell">
-    <?php require_once "../../components/admin/sidebar.php"; ?>
+<?php
+require '../../repositories/book-repository.php';
+require '../../repositories/category-repository.php';
+require '../../repositories/author-repository.php';
 
-    <main class="app-main">
-      <?php require_once "../../components/admin/topbar.php"; ?>
+$book = getBook();
+$categories = getCategories();
+$authors = getAuthors();
 
-      <div class="app-content">
-        <form method="" action="">
-          <input type="hidden" name="id" value="<?= $book['id'] ?>">
-          <div class="form-card" style="margin-bottom:20px;">
-            <div class="form-section-title">Data Buku</div>
-            <div class="form-group">
-              <label for="title">Judul Buku</label>
-              <input type="text" id="title" name="title" value="<?= $book['title'] ?>">
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label for="isbn">ISBN</label>
-                <input type="text" id="isbn" name="isbn" value="<?= $book['isbn'] ?>">
-              </div>
-              <div class="form-group">
-                <label for="year">Tahun Terbit</label>
-                <input type="number" id="year" name="year" value="<?= $book['year'] ?>">
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label for="stock">Jumlah Stok</label>
-                <input type="number" id="stock" name="stock" value="<?= $book['stock'] ?>">
-              </div>
-              <div class="form-group">
-                <label for="category_id">Kategori</label>
-                <select id="category_id" name="category_id">
-                  <?php foreach ($categories as $index => $category): ?>
-                    <option value="<?= $index + 1 ?>" <?= ($index + 1) === $book['category_id'] ? 'selected' : '' ?>><?= $category ?></option>
-                  <?php endforeach; ?>
-                </select>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="description">Deskripsi</label>
-              <textarea id="description" name="description" rows="3"><?= $book['description'] ?></textarea>
-            </div>
+/*
+ * Pastikan author_ids selalu berupa array.
+ * Jika getBook() belum mengembalikan author_ids,
+ * gunakan array kosong agar in_array() tidak error.
+ */
+$authorIds = $book['author_ids'] ?? [];
+
+if (!is_array($authorIds)) {
+  $authorIds = [];
+}
+?>
+
+<div class="app-shell">
+
+  <?php require '../../components/admin/sidebar.php'; ?>
+
+  <main class="app-main">
+
+    <?php
+    $pageTitle = 'Edit Buku';
+    $pageSubtitle = 'Perbarui data buku, kategori, dan penulis';
+    require '../../components/admin/topbar.php';
+    ?>
+
+    <div class="app-content">
+
+      <form method="POST" action="../../actions/books/update.php">
+
+        <input
+          type="hidden"
+          name="id"
+          value="<?= htmlspecialchars($book['id'] ?? '') ?>"
+        >
+
+        <div class="form-card" style="margin-bottom:20px;">
+
+          <div class="form-section-title">
+            Data Buku
           </div>
 
-          <div class="form-card">
-            <div class="form-section-title">Penulis Buku</div>
+          <div class="form-group">
+            <label for="title">Judul Buku</label>
+
+            <input
+              type="text"
+              id="title"
+              name="title"
+              value="<?= htmlspecialchars($book['title'] ?? '') ?>"
+            >
+          </div>
+
+          <div class="form-row">
+
             <div class="form-group">
-              <label>Pilih Penulis (bisa lebih dari satu)</label>
-              <div class="checkbox-grid">
-                <?php foreach ($authors as $index => $authorName): ?>
-                  <?php $authorId = $index + 1; ?>
-                  <label class="checkbox-item">
-                    <input type="checkbox" name="author_ids[]" value="<?= $authorId ?>" <?= in_array($authorId, $book['author_ids']) ? 'checked' : '' ?>>
-                    <?= $authorName ?>
-                  </label>
+              <label for="isbn">ISBN</label>
+
+              <input
+                type="text"
+                id="isbn"
+                name="isbn"
+                value="<?= htmlspecialchars($book['isbn'] ?? '') ?>"
+              >
+            </div>
+
+            <div class="form-group">
+              <label for="year">Tahun Terbit</label>
+
+              <input
+                type="number"
+                id="year"
+                name="year"
+                value="<?= htmlspecialchars($book['year'] ?? '') ?>"
+              >
+            </div>
+
+          </div>
+
+          <div class="form-row">
+
+            <div class="form-group">
+              <label for="stock">Jumlah Stok</label>
+
+              <input
+                type="number"
+                id="stock"
+                name="stock"
+                value="<?= htmlspecialchars($book['stock'] ?? '') ?>"
+              >
+            </div>
+
+            <div class="form-group">
+              <label for="category_id">Kategori</label>
+
+              <select id="category_id" name="category_id">
+
+                <?php foreach ($categories as $category): ?>
+
+                  <option
+                    value="<?= $category['id'] ?>"
+                    <?= $category['id'] == ($book['category_id'] ?? null) ? 'selected' : '' ?>
+                  >
+                    <?= htmlspecialchars($category['name']) ?>
+                  </option>
+
                 <?php endforeach; ?>
-              </div>
+
+              </select>
             </div>
 
-            <div class="form-actions">
-              <a href="index.php" class="btn btn-outline">Batal</a>
-              <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
-            </div>
           </div>
-        </form>
-      </div>
-    </main>
-  </div>
+
+          <div class="form-group">
+
+            <label for="description">
+              Deskripsi
+            </label>
+
+            <textarea
+              id="description"
+              name="description"
+              rows="3"
+            ><?= htmlspecialchars($book['description'] ?? '') ?></textarea>
+
+          </div>
+
+        </div>
+
+        <div class="form-card">
+
+          <div class="form-section-title">
+            Penulis Buku
+          </div>
+
+          <div class="form-group">
+
+            <label>
+              Pilih Penulis (bisa lebih dari satu)
+            </label>
+
+            <div class="checkbox-grid">
+
+              <?php foreach ($authors as $author): ?>
+
+                <label class="checkbox-item">
+
+                  <input
+                    type="checkbox"
+                    name="author_ids[]"
+                    value="<?= $author['id'] ?>"
+                    <?= in_array($author['id'], $authorIds) ? 'checked' : '' ?>
+                  >
+
+                  <?= htmlspecialchars($author['name']) ?>
+
+                </label>
+
+              <?php endforeach; ?>
+
+            </div>
+
+          </div>
+
+          <div class="form-actions">
+
+            <a
+              href="index.php"
+              class="btn btn-outline"
+            >
+              Batal
+            </a>
+
+            <button
+              type="submit"
+              name="ubah_buku"
+              class="btn btn-primary"
+            >
+              Simpan Perubahan
+            </button>
+
+          </div>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </main>
+
+</div>
+
 </body>
 </html>
