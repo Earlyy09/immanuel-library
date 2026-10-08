@@ -8,19 +8,10 @@
 </head>
 <body>
   <?php
-  $user = [
-      "id"    => 1,
-      "name"  => "Budi Santoso",
-      "email" => "budi.santoso@siswa.ski.sch.id",
-      "role"  => "member",
-  ];
-
-  $profile = [
-      "user_id" => 1,
-      "phone"   => "0812-3456-7890",
-      "address" => "Jl. Merdeka No. 21, Pontianak, Kalimantan Barat",
-      "bio"     => "Murid kelas XI TKJ yang gemar membaca novel fiksi dan buku pengembangan diri.",
-  ];
+  require '../../repositories/user-repository.php';
+  
+  $user = getUser();
+  $profile = getProfile();
   ?>
   <div class="app-shell">
     <?php require_once "../../components/admin/sidebar.php"; ?>
@@ -29,22 +20,22 @@
       <?php require_once "../../components/admin/topbar.php"; ?>
 
       <div class="app-content">
-        <form method="" action="">
+        <form method="POST" action="../../actions/profile/update.php">
           <div class="form-card" style="margin-bottom:20px;">
             <div class="form-section-title">Data Akun</div>
             <div class="form-row">
               <div class="form-group">
                 <label for="name">Nama Lengkap</label>
-                <input type="text" id="name" name="name" value="<?= $user['name'] ?>">
+                <input type="text" id="name" name="name" value="<?= htmlspecialchars($user['name'] ?? '') ?>">
               </div>
               <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" id="email" name="email" value="<?= $user['email'] ?>">
+                <input type="email" id="email" name="email" value="<?= htmlspecialchars($user['email'] ?? '') ?>">
               </div>
             </div>
             <div class="form-group">
               <label>Role</label>
-              <input type="text" value="<?= ucfirst($user['role']) ?>" disabled>
+              <input type="text" value="<?= htmlspecialchars(ucfirst($user['role'] ?? 'Member')) ?>" disabled>
               <p class="form-help">Role hanya dapat diubah oleh Admin melalui menu Manajemen Pengguna.</p>
             </div>
           </div>
@@ -53,18 +44,18 @@
             <div class="form-section-title">Data Profil</div>
             <div class="form-group">
               <label for="phone">Nomor Telepon</label>
-              <input type="text" id="phone" name="phone" value="<?= $profile['phone'] ?>">
+              <input type="text" id="phone" name="phone" value="<?= htmlspecialchars($profile['phone'] ?? '') ?>">
             </div>
             <div class="form-group">
               <label for="address">Alamat</label>
-              <input type="text" id="address" name="address" value="<?= $profile['address'] ?>">
+              <input type="text" id="address" name="address" value="<?= htmlspecialchars($profile['address'] ?? '') ?>">
             </div>
             <div class="form-group">
               <label for="bio">Bio Singkat</label>
-              <textarea id="bio" name="bio" rows="3"><?= $profile['bio'] ?></textarea>
+              <textarea id="bio" name="bio" rows="3"><?= htmlspecialchars($profile['bio'] ?? '') ?></textarea>
             </div>
             <div class="form-actions">
-              <button type="button" class="btn btn-outline">Batal</button>
+              <a href="index.php" class="btn btn-outline">Batal</a>
               <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
             </div>
           </div>
