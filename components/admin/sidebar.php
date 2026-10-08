@@ -7,7 +7,7 @@
   <div class="nav-group-label">Menu Utama</div>
 
   <nav>
-    <a href="/index.php" class="">
+    <a href="../../index.php" class="">
       <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M3 9.5 12 3l9 6.5V20a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z" />
@@ -15,7 +15,7 @@
       Beranda
     </a>
 
-    <a href="/pages/books/index.php" class="">
+    <a href="../../pages/books/index.php" class="">
       <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
@@ -24,7 +24,7 @@
       Buku
     </a>
 
-    <a href="/pages/categories/index.php" class="">
+    <a href="../../pages/categories/index.php" class="">
       <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z" />
@@ -32,7 +32,7 @@
       Kategori
     </a>
 
-    <a href="/pages/authors/index.php" class="">
+    <a href="../../pages/authors/index.php" class="">
       <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M12 20h9" />
@@ -41,7 +41,7 @@
       Penulis
     </a>
 
-    <a href="/pages/users/index.php" class="">
+    <a href="../../pages/users/index.php" class="">
       <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M16 19v-1a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v1" />
@@ -52,7 +52,7 @@
       Pengguna
     </a>
 
-    <a href="/pages/profile/edit.php" class="">
+    <a href="../../pages/profile/edit.php" class="">
       <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M19 19.5v-1a4.5 4.5 0 0 0-4.5-4.5h-5A4.5 4.5 0 0 0 5 18.5v1" />

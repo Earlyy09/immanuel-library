@@ -20,12 +20,13 @@
       <?php require_once "../../components/admin/topbar.php"; ?>
 
       <div class="app-content">
-        <form method="" action="">
+        <!-- Perbaikan: Menambahkan method="POST" dan action ke file pemroses -->
+        <form method="POST" action="../../actions/books/store.php">
           <div class="form-card" style="margin-bottom:20px;">
             <div class="form-section-title">Data Buku</div>
             <div class="form-group">
               <label for="title">Judul Buku</label>
-              <input type="text" id="title" name="title" placeholder="Contoh: Laskar Pelangi">
+              <input type="text" id="title" name="title" placeholder="Contoh: Laskar Pelangi" required>
             </div>
             <div class="form-row">
               <div class="form-group">
@@ -45,8 +46,16 @@
               <div class="form-group">
                 <label for="category_id">Kategori</label>
                 <select id="category_id" name="category_id">
-                  <?php foreach ($categories as $index => $category): ?>
-                    <option value="<?= $index + 1 ?>"><?= $category ?></option>
+                  <option value="">-- Pilih Kategori --</option>
+                  <?php foreach ($categories as $category): ?>
+                    <!-- Perbaikan: Mengambil ID dan Nama dari array $category -->
+                    <?php 
+                      $catId = is_array($category) ? ($category['id'] ?? '') : $category;
+                      $catName = is_array($category) ? ($category['name'] ?? $category['category_name'] ?? '') : $category;
+                    ?>
+                    <option value="<?= htmlspecialchars($catId) ?>">
+                      <?= htmlspecialchars($catName) ?>
+                    </option>
                   <?php endforeach; ?>
                 </select>
               </div>
@@ -62,10 +71,15 @@
             <div class="form-group">
               <label>Pilih Penulis (bisa lebih dari satu)</label>
               <div class="checkbox-grid">
-                <?php foreach ($authors as $index => $authorName): ?>
+                <?php foreach ($authors as $author): ?>
+                  <!-- Perbaikan: Mengambil ID dan Nama dari array $author -->
+                  <?php 
+                    $authorId = is_array($author) ? ($author['id'] ?? '') : $author;
+                    $authorName = is_array($author) ? ($author['name'] ?? '') : $author;
+                  ?>
                   <label class="checkbox-item">
-                    <input type="checkbox" name="author_ids[]" value="<?= $index + 1 ?>">
-                    <?= $authorName ?>
+                    <input type="checkbox" name="author_ids[]" value="<?= htmlspecialchars($authorId) ?>">
+                    <?= htmlspecialchars($authorName) ?>
                   </label>
                 <?php endforeach; ?>
               </div>
@@ -73,7 +87,7 @@
 
             <div class="form-actions">
               <a href="index.php" class="btn btn-outline">Batal</a>
-              <button type="submit" class="btn btn-primary">Simpan Buku</button>
+              <button type="submit" name="tambah_buku" class="btn btn-primary">Simpan Buku</button>
             </div>
           </div>
         </form>

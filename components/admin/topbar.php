@@ -1,9 +1,8 @@
 <header class="app-topbar">
   <div class="page-title">
-    <h1><?= $pageTitle ?></h1>
-    <p><?= $pageSubtitle ?></p>
+    <h1><?= isset($pageTitle) ? $pageTitle : 'Immanuel Library' ?></h1>
+    <p><?= isset($pageSubtitle) ? $pageSubtitle : '' ?></p>
   </div>
-
   <div class="topbar-user">
     <span class="avatar">BS</span>
     <div>
