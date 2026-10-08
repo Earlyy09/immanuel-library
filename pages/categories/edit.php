@@ -8,11 +8,13 @@
 </head>
 <body>
   <?php
-  $category = [
-      "id"          => 1,
-      "name"        => "Fiksi",
-      "description" => "Novel dan cerita rekaan",
-  ];
+  require '../../repositories/category-repository.php';
+  $category = getCategory();
+
+  if (!$category) {
+      header('Location: index.php');
+      exit;
+  }
   ?>
   <div class="app-shell">
     <?php require_once "../../components/admin/sidebar.php"; ?>
@@ -21,17 +23,17 @@
       <?php require_once "../../components/admin/topbar.php"; ?>
 
       <div class="app-content">
-        <form method="" action="">
-          <input type="hidden" name="id" value="<?= $category['id'] ?>">
+        <form method="POST" action="../../actions/categories/update.php">
+          <input type="hidden" name="id" value="<?= htmlspecialchars($category['id'] ?? '') ?>">
           <div class="form-card">
             <div class="form-section-title">Data Kategori</div>
             <div class="form-group">
               <label for="name">Nama Kategori</label>
-              <input type="text" id="name" name="name" value="<?= $category['name'] ?>">
+              <input type="text" id="name" name="name" value="<?= htmlspecialchars($category['name'] ?? '') ?>">
             </div>
             <div class="form-group">
               <label for="description">Deskripsi</label>
-              <textarea id="description" name="description" rows="3"><?= $category['description'] ?></textarea>
+              <textarea id="description" name="description" rows="3"><?= htmlspecialchars($category['description'] ?? '') ?></textarea>
             </div>
 
             <div class="form-actions">
