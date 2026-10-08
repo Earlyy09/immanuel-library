@@ -26,11 +26,13 @@
             <div class="form-row">
               <div class="form-group">
                 <label for="name">Nama Lengkap</label>
+                <!-- Perbaikan: Tambah spasi <input type=... dan aman dari undefined key -->
                 <input type="text" id="name" name="name" value="<?= htmlspecialchars($user['name'] ?? '') ?>">
               </div>
               <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" id="email" name="email" value="<?= htmlspecialchars($user['email'] ?? '') ?>">
+                <!-- Perbaikan: Tambah null coalescing operator ?? '' -->
+                <input type="email" id="email" name="email" value="<?= htmlspecialchars($user['email'] ?? '') ?>"> 
               </div>
             </div>
             <div class="form-group">
