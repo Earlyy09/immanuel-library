@@ -10,11 +10,14 @@
 
 <body>
   <?php
-  $author = [
-    "id" => 1,
-    "name" => "Andrea Hirata",
-    "bio" => "Penulis asal Belitung, dikenal lewat novel Laskar Pelangi.",
-  ];
+  require '../../repositories/author-repository.php';
+  $author = getAuthor();
+
+  // Jika data penulis tidak ditemukan/kosong, alihkan kembali ke halaman utama
+  if (!$author) {
+      header('Location: index.php');
+      exit;
+  }
   ?>
   <div class="app-shell">
     <?php require_once "../../components/admin/sidebar.php"; ?>
@@ -23,17 +26,17 @@
       <?php require_once "../../components/admin/topbar.php"; ?>
 
       <div class="app-content">
-        <form method="" action="">
-          <input type="hidden" name="id" value="<?= $author['id'] ?>">
+        <form method="POST" action="../../actions/authors/update.php">
+          <input type="hidden" name="id" value="<?= htmlspecialchars($author['id'] ?? '') ?>">
           <div class="form-card">
             <div class="form-section-title">Data Penulis</div>
             <div class="form-group">
               <label for="name">Nama Penulis</label>
-              <input type="text" id="name" name="name" value="<?= $author['name'] ?>">
+              <input type="text" id="name" name="name" value="<?= htmlspecialchars($author['name'] ?? '') ?>">
             </div>
             <div class="form-group">
               <label for="bio">Biografi Singkat</label>
-              <textarea id="bio" name="bio" rows="3"><?= $author['bio'] ?></textarea>
+              <textarea id="bio" name="bio" rows="3"><?= htmlspecialchars($author['bio'] ?? '') ?></textarea>
             </div>
             <div class="form-actions">
               <a href="index.php" class="btn btn-outline">Batal</a>

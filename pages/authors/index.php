@@ -39,7 +39,7 @@
               </tr>
             </thead>
             <tbody>
-              <?php foreach ($authors as $author): ?>
+              <?php foreach ($authors as $index => $author): ?>
               <tr>
                 <td>
                   <div class="cell-primary">
@@ -51,7 +51,7 @@
                 <td>
                   <div class="cell-actions">
                     <a href="edit.php?id=<?= $author['id'] ?>" class="btn btn-outline btn-sm">Edit</a>
-                    <a href="#" class="btn btn-danger btn-sm">Hapus</a>
+                    <a href="../../actions/authors/destroy.php?id=<?= $author['id'] ?>" onclick="return confirm('Yakin ingin menghapus penulis ini?')" class="btn btn-danger btn-sm">Hapus</a>
                   </div>
                 </td>
               </tr>
