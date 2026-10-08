@@ -8,12 +8,14 @@
 </head>
 <body>
   <?php
-  $user = [
-      "id"    => 2,
-      "name"  => "Budi Santoso",
-      "email" => "budi.santoso@siswa.ski.sch.id",
-      "role"  => "member",
-  ];
+  require '../../repositories/user-repository.php';
+  $user = getUser();
+
+  // Jika data pengguna tidak ditemukan, alihkan kembali ke halaman utama
+  if (!$user) {
+      header('Location: index.php');
+      exit;
+  }
   ?>
   <div class="app-shell">
     <?php require_once "../../components/admin/sidebar.php"; ?>
@@ -22,25 +24,25 @@
       <?php require_once "../../components/admin/topbar.php"; ?>
 
       <div class="app-content">
-        <form method="" action="">
-          <input type="hidden" name="id" value="<?= $user['id'] ?>">
+        <form method="POST" action="../../actions/users/update.php">
+          <input type="hidden" name="id" value="<?= htmlspecialchars($user['id'] ?? '') ?>">
           <div class="form-card">
             <div class="form-section-title">Data Pengguna</div>
             <div class="form-row">
               <div class="form-group">
                 <label for="name">Nama Lengkap</label>
-                <input type="text" id="name" name="name" value="<?= $user['name'] ?>">
+                <input type="text" id="name" name="name" value="<?= htmlspecialchars($user['name'] ?? '') ?>">
               </div>
               <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" id="email" name="email" value="<?= $user['email'] ?>">
+                <input type="email" id="email" name="email" value="<?= htmlspecialchars($user['email'] ?? '') ?>">
               </div>
             </div>
             <div class="form-group">
               <label for="role">Role</label>
               <select id="role" name="role">
-                <option value="member" <?= $user['role'] === 'member' ? 'selected' : '' ?>>Member</option>
-                <option value="admin" <?= $user['role'] === 'admin' ? 'selected' : '' ?>>Admin</option>
+                <option value="member" <?= (($user['role'] ?? '') === 'member') ? 'selected' : '' ?>>Member</option>
+                <option value="admin" <?= (($user['role'] ?? '') === 'admin') ? 'selected' : '' ?>>Admin</option>
               </select>
             </div>
 
