@@ -14,11 +14,12 @@ function getUsers()
 
 function getUser()
 {
-    $user = [
-        ["id" => 2, "name" => "Budi Santoso", "email" => "budi.santoso@siswa.ski.sch.id", "role" => "member"]
+    return [
+        "id" => 2,
+        "name" => "Budi Santoso",
+        "email" => "budi.santoso@siswa.ski.sch.id",
+        "role" => "member"
     ];
-
-    return $user;
 }
 
 function getProfile() {

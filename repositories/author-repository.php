@@ -15,9 +15,10 @@ function getAuthors()
 
 function getAuthor()
 {
-    $author = [
-        ["id" => 1, "name" => "Andrea Hirata", "bio" => "Penulis asal Belitung, dikenal lewat novel Laskar Pelangi.", "total_books" => 1],
+    return [
+        "id" => 1,
+        "name" => "Andrea Hirata",
+        "bio" => "Penulis asal Belitung, dikenal lewat novel Laskar Pelangi.",
+        "total_books" => 1
     ];
-
-    return $author;
 }
