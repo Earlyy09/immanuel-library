@@ -8,17 +8,14 @@
   <link rel="stylesheet" href="../../styles/books/index.css">
 </head>
 
-
 <body>
   <?php
-  $book = [
-    "id" => 1,
-    "title" => "Laskar Pelangi",
-    "category" => "Fiksi",
-    "year" => 2005,
-    "stock" => 12,
-    "authors" => "Andrea Hirata",
-  ];
+  require_once '../../repositories/book-repository.php';
+
+  $books = getBooks();
+
+  $pageTitle = 'Manajemen Buku';
+  $pageSubtitle = 'Kelola koleksi buku perpustakaan';
   ?>
   <div class="app-shell">
     <?php require_once "../../components/admin/sidebar.php"; ?>
@@ -33,7 +30,7 @@
 
       <div class="app-content">
         <div class="toolbar">
-          <form method="" action="" class="toolbar-filters">
+          <form method="GET" action="" class="toolbar-filters">
             <div class="search-box">
               <svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -66,24 +63,35 @@
               </tr>
             </thead>
             <tbody>
+              <?php foreach ($books as $book): ?>
               <tr>
                 <td>
                   <div class="cell-primary">
-                    <span class="cell-thumb"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    <span class="cell-thumb">
+                      <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
                         <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z" />
-                      </svg></span>
-                    <a href="show.php?id=<?= $book['id'] ?>" style="color:inherit;"><?= $book['title'] ?></a>
+                      </svg>
+                    </span>
+                    <a href="show.php?id=<?= $book['id'] ?>" style="color:inherit;">
+                      <?= htmlspecialchars($book['title']) ?>
+                    </a>
                   </div>
                 </td>
-                <td><span class="badge badge-muted"><?= $book['category'] ?></span></td>
+                <td><span class="badge badge-muted"><?= htmlspecialchars($book['category']) ?></span></td>
                 <td>
                   <div class="chip-list">
-                    <span class="chip"><?= $book['authors'] ?></span>
+                    <?php if (is_array($book['authors'])): ?>
+                      <?php foreach ($book['authors'] as $author): ?>
+                        <span class="chip"><?= htmlspecialchars($author) ?></span>
+                      <?php endforeach; ?>
+                    <?php else: ?>
+                      <span class="chip"><?= htmlspecialchars($book['authors']) ?></span>
+                    <?php endif; ?>
                   </div>
                 </td>
-                <td><?= $book['stock'] ?></td>
+                <td><?= htmlspecialchars($book['stock']) ?></td>
                 <td>
                   <div class="cell-actions">
                     <a href="edit.php?id=<?= $book['id'] ?>" class="btn btn-outline btn-sm">Edit</a>
@@ -91,6 +99,7 @@
                   </div>
                 </td>
               </tr>
+              <?php endforeach; ?>
             </tbody>
           </table>
         </div>
