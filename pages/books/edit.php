@@ -13,28 +13,23 @@ require '../../repositories/book-repository.php';
 require '../../repositories/category-repository.php';
 require '../../repositories/author-repository.php';
 
-$book = getBook();
+// Ambil ID dari URL (misal: edit.php?id=5)
+$id = $_GET['id'] ?? 5; 
+$book = getBook($id);
 $categories = getCategories();
 $authors = getAuthors();
 
-/*
- * Pastikan author_ids selalu berupa array.
- * Jika getBook() belum mengembalikan author_ids,
- * gunakan array kosong agar in_array() tidak error.
- */
+// Memastikan author_ids berupa array
 $authorIds = $book['author_ids'] ?? [];
-
 if (!is_array($authorIds)) {
   $authorIds = [];
 }
 ?>
 
 <div class="app-shell">
-
   <?php require '../../components/admin/sidebar.php'; ?>
 
   <main class="app-main">
-
     <?php
     $pageTitle = 'Edit Buku';
     $pageSubtitle = 'Perbarui data buku, kategori, dan penulis';
@@ -42,9 +37,7 @@ if (!is_array($authorIds)) {
     ?>
 
     <div class="app-content">
-
       <form method="POST" action="../../actions/books/update.php">
-
         <input
           type="hidden"
           name="id"
@@ -52,27 +45,22 @@ if (!is_array($authorIds)) {
         >
 
         <div class="form-card" style="margin-bottom:20px;">
-
-          <div class="form-section-title">
-            Data Buku
-          </div>
+          <div class="form-section-title">Data Buku</div>
 
           <div class="form-group">
             <label for="title">Judul Buku</label>
-
             <input
               type="text"
               id="title"
               name="title"
               value="<?= htmlspecialchars($book['title'] ?? '') ?>"
+              required
             >
           </div>
 
           <div class="form-row">
-
             <div class="form-group">
               <label for="isbn">ISBN</label>
-
               <input
                 type="text"
                 id="isbn"
@@ -83,7 +71,6 @@ if (!is_array($authorIds)) {
 
             <div class="form-group">
               <label for="year">Tahun Terbit</label>
-
               <input
                 type="number"
                 id="year"
@@ -91,14 +78,11 @@ if (!is_array($authorIds)) {
                 value="<?= htmlspecialchars($book['year'] ?? '') ?>"
               >
             </div>
-
           </div>
 
           <div class="form-row">
-
             <div class="form-group">
               <label for="stock">Jumlah Stok</label>
-
               <input
                 type="number"
                 id="stock"
@@ -109,103 +93,59 @@ if (!is_array($authorIds)) {
 
             <div class="form-group">
               <label for="category_id">Kategori</label>
-
               <select id="category_id" name="category_id">
-
                 <?php foreach ($categories as $category): ?>
-
-                  <option
-                    value="<?= $category['id'] ?>"
-                    <?= $category['id'] == ($book['category_id'] ?? null) ? 'selected' : '' ?>
+                  <option 
+                    value="<?= $category['id'] ?>" 
+                    <?= ($category['id'] == ($book['category_id'] ?? null)) ? 'selected' : '' ?>
                   >
                     <?= htmlspecialchars($category['name']) ?>
                   </option>
-
                 <?php endforeach; ?>
-
               </select>
             </div>
-
           </div>
 
           <div class="form-group">
-
-            <label for="description">
-              Deskripsi
-            </label>
-
+            <label for="description">Deskripsi</label>
             <textarea
               id="description"
               name="description"
               rows="3"
             ><?= htmlspecialchars($book['description'] ?? '') ?></textarea>
-
           </div>
-
         </div>
 
         <div class="form-card">
-
-          <div class="form-section-title">
-            Penulis Buku
-          </div>
+          <div class="form-section-title">Penulis Buku</div>
 
           <div class="form-group">
-
-            <label>
-              Pilih Penulis (bisa lebih dari satu)
-            </label>
-
+            <label>Pilih Penulis (bisa lebih dari satu)</label>
             <div class="checkbox-grid">
-
               <?php foreach ($authors as $author): ?>
-
                 <label class="checkbox-item">
-
                   <input
                     type="checkbox"
                     name="author_ids[]"
                     value="<?= $author['id'] ?>"
                     <?= in_array($author['id'], $authorIds) ? 'checked' : '' ?>
                   >
-
                   <?= htmlspecialchars($author['name']) ?>
-
                 </label>
-
               <?php endforeach; ?>
-
             </div>
-
           </div>
 
           <div class="form-actions">
-
-            <a
-              href="index.php"
-              class="btn btn-outline"
-            >
-              Batal
-            </a>
-
-            <button
-              type="submit"
-              name="ubah_buku"
-              class="btn btn-primary"
-            >
+            <a href="index.php" class="btn btn-outline">Batal</a>
+            <button type="submit" name="ubah_buku" class="btn btn-primary">
               Simpan Perubahan
             </button>
-
           </div>
-
         </div>
-
       </form>
-
     </div>
-
   </main>
-
 </div>
 
 </body>
