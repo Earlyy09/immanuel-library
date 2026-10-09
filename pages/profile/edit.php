@@ -61,7 +61,7 @@
               <textarea id="bio" name="bio" rows="3"><?= htmlspecialchars($profile['bio'] ?? '') ?></textarea>
             </div>
             <div class="form-actions">
-              <a href="index.php" class="btn btn-outline">Batal</a>
+              <a href="../books/index.php" class="btn btn-outline">Batal</a>
               <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
             </div>
           </div>
