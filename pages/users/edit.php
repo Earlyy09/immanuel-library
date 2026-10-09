@@ -21,7 +21,12 @@
     <?php require_once "../../components/admin/sidebar.php"; ?>
 
     <main class="app-main">
-      <?php require_once "../../components/admin/topbar.php"; ?>
+      <?php
+      $pageTitle = 'Edit Pengguna';
+      $pageSubtitle = 'Perbarui informasi akun pengguna';
+
+      require_once '../../components/admin/topbar.php';
+      ?>
 
       <div class="app-content">
         <form method="POST" action="../../actions/users/update.php">

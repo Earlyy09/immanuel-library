@@ -17,7 +17,11 @@
     <?php require_once "../../components/admin/sidebar.php"; ?>
 
     <main class="app-main">
-      <?php require_once "../../components/admin/topbar.php"; ?>
+      <?php
+      $pageTitle = 'Profil Saya';
+      $pageSubtitle = 'Kelola informasi profil akun';
+      require_once '../../components/admin/topbar.php';
+      ?>
 
       <div class="app-content">
         <form method="POST" action="../../actions/profile/update.php">

@@ -14,7 +14,12 @@
     <?php require_once "../../components/admin/sidebar.php"; ?>
 
     <main class="app-main">
-      <?php require_once "../../components/admin/topbar.php"; ?>
+      <?php
+      $pageTitle = 'Detail Buku';
+      $pageSubtitle = 'Informasi lengkap buku';
+      
+      require_once '../../components/admin/topbar.php';
+      ?>
 
       <div class="app-content">
         <div class="detail-grid">

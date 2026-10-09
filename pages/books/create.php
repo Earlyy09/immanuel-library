@@ -17,7 +17,12 @@
     <?php require_once "../../components/admin/sidebar.php"; ?>
 
     <main class="app-main">
-      <?php require_once "../../components/admin/topbar.php"; ?>
+      <?php
+      $pageTitle = 'Tambah Buku';
+      $pageSubtitle = 'Tambahkan buku baru ke koleksi';
+      
+      require_once '../../components/admin/topbar.php';
+      ?>
 
       <div class="app-content">
         <!-- Perbaikan: Menambahkan method="POST" dan action ke file pemroses -->

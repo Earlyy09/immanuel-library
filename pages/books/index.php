@@ -24,7 +24,12 @@
     <?php require_once "../../components/admin/sidebar.php"; ?>
 
     <main class="app-main">
-      <?php require_once "../../components/admin/topbar.php"; ?>
+      <?php
+      $pageTitle = 'Manajemen Buku';
+      $pageSubtitle = 'Kelola koleksi buku perpustakaan';
+      
+      require_once '../../components/admin/topbar.php';
+      ?>
 
       <div class="app-content">
         <div class="toolbar">

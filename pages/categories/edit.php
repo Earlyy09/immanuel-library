@@ -20,7 +20,12 @@
     <?php require_once "../../components/admin/sidebar.php"; ?>
 
     <main class="app-main">
-      <?php require_once "../../components/admin/topbar.php"; ?>
+      <?php
+      $pageTitle = 'Edit Kategori';
+      $pageSubtitle = 'Perbarui informasi kategori';
+      
+      require_once '../../components/admin/topbar.php';
+      ?>
 
       <div class="app-content">
         <form method="POST" action="../../actions/categories/update.php">

@@ -11,7 +11,12 @@
     <?php require_once "../../components/admin/sidebar.php"; ?>
 
     <main class="app-main">
-      <?php require_once "../../components/admin/topbar.php"; ?>
+      <?php
+      $pageTitle = 'Tambah Kategori';
+      $pageSubtitle = 'Tambahkan kategori baru';
+      
+      require_once '../../components/admin/topbar.php';
+      ?>
 
       <div class="app-content">
         <form method="POST" action="../../actions/categories/store.php">
